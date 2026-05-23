@@ -246,7 +246,7 @@ The cross-tabulation reveals that high-consumption customers without unlimited p
 
 ## 12. Author
 
-**[Your Name]**
+**Abdulaziz** - 
 Data Analytics Portfolio Project
 
 - 🔗 https://www.linkedin.com/in/abdulaziz-abidzhanov-62656b343/
