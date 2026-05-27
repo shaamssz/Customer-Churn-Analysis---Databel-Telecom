@@ -1,6 +1,6 @@
-# Customer Churn Analysis — Databel Telecom
+# Customer Churn Analysis: Databel Telecom
 
-> *A business case study examining what is driving 26.9% customer churn at a US telecom provider — and what the retention team should do about it.*
+> A business case study looking at why 26.9% of Databel's customers are leaving, and where the retention team should focus first.
 
 ---
 
@@ -25,32 +25,33 @@
 
 ### The Industry Problem
 
-Customer churn is one of the most damaging and expensive problems in the telecom industry. Acquiring a new customer costs significantly more than retaining an existing one, yet most telecom providers struggle to identify *who* is at risk of leaving, *why* they leave, and *when* to intervene — before it is too late.
+Churn is an expensive problem for any telecom company. Winning a new customer costs a lot more than keeping one you already have, and most providers have a hard time spotting who is about to leave until they have already gone.
 
-For a mid-sized provider like Databel, operating across all 50 US states in a saturated market where switching costs are low and competitors are aggressive, even a few percentage points of avoidable churn translates directly into lost recurring revenue and wasted acquisition spend.
+Databel is a mid-sized provider operating across all 50 US states. The market is crowded, switching costs are low, and competitors are quick to undercut on price. In that kind of environment, even a small share of avoidable churn adds up to real money lost, both in recurring revenue and in the cost of replacing those customers.
 
 ### The Question
 
-With an overall churn rate sitting at **26.9%** — well above the ~15–20% typical for US telecom — the central question this analysis set out to answer was not simply *how many* customers are leaving, but *which ones*, *under what conditions*, and *what that tells us about where the business should focus*.
+Databel's churn rate sits at 26.9%, well above the 15 to 20% that is normal for US telecom. The point of this analysis was less about the headline number and more about what sits underneath it: which customers are leaving, what they have in common, and where the business can actually do something about it.
 
-Specifically:
+Three questions guided the work:
 
-1. **How bad is it?** What is the actual churn rate across the customer base, and where does it concentrate?
-2. **Who is leaving?** Which segments — by contract type, age group, geography, and plan type — show the highest churn rates?
-3. **What is driving it?** Which product, pricing, or service factors appear most strongly associated with the decision to cancel?
+1. How bad is it, and where does the churn concentrate?
+2. Who is leaving, broken down by contract type, age, geography, and plan?
+3. What seems to be driving the decision to cancel?
 
 ### The Approach & Outcome
 
-Using Databel's customer dataset (~6,700 records), churn was analyzed across multiple dimensions: contract type, demographics, international plan usage, data consumption behavior, and state-level geography. The analysis identified three high-priority segments — month-to-month contract holders, international plan subscribers in specific states, and senior customers (65+) — and produced a set of targeted, prioritized retention recommendations grounded directly in the data.
+I worked through Databel's customer dataset of roughly 6,700 records and looked at churn across contract type, demographics, international plan usage, data consumption, and state. Three groups stood out as the clearest priorities: month-to-month customers, international plan subscribers in a handful of states, and customers aged 65 and over. The recommendations at the end of this document come straight out of those patterns.
 
 ---
 
 ## 2. Objectives
 
-- **Primary Objective:** Calculate the overall churn rate and identify which customer segments churn at the highest rates.
-- **Secondary Objective 1:** Determine whether contract type (month-to-month vs. one-year vs. two-year) is a meaningful predictor of churn.
-- **Secondary Objective 2:** Assess whether international plan usage and extra international charges correlate with elevated churn rates.
-- **Secondary Objective 3:** Explore whether demographic factors (age group, senior status) or data consumption patterns differ meaningfully across churned and retained customers.
+- **Primary Objective:** Calculate the overall churn rate and find which customer segments churn the most.
+- **Secondary Objective 1:** Check whether contract type (month-to-month, one-year, two-year) predicts churn.
+- **Secondary Objective 2:** See whether international plan usage and extra international charges line up with higher churn.
+- **Secondary Objective 3:** Look at whether age group, senior status, or data consumption patterns differ between customers who left and those who stayed.
+
 ---
 
 ## 3. Project Scope & Tools
@@ -59,17 +60,17 @@ Using Databel's customer dataset (~6,700 records), churn was analyzed across mul
 
 | Dimension | Details |
 |---|---|
-| **In Scope** | All customers in the Databel aggregate dataset across 50 US states; churn by contract type, demographics, data usage, and international plan |
-| **Out of Scope** | Individual-level predictive modeling; time-series churn trends (no time dimension in this dataset) |
-| **Time Period** | Static snapshot — no date range; dataset represents a single period |
-| **Granularity** | Aggregated customer-level rows (one row per unique combination of attributes); not raw transactional data |
+| **In Scope** | All customers in the Databel dataset across 50 US states; churn by contract type, demographics, data usage, and international plan |
+| **Out of Scope** | Individual-level predictive modeling; time-series churn trends (the data has no time dimension) |
+| **Time Period** | A single static snapshot with no date range |
+| **Granularity** | Aggregated customer-level rows, one row per unique combination of attributes |
 
 ### Tools & Technologies
 
 | Category | Tool(s) Used |
 |---|---|
 | Data Storage | CSV / Excel (.xlsx) |
-| Data Processing | Microsoft Excel — calculated columns, structured tables |
+| Data Processing | Microsoft Excel (calculated columns, structured tables) |
 | Analysis | Excel PivotTables, GETPIVOTDATA formulas |
 | Visualization | Excel PivotCharts, dashboard sheet |
 | Version Control | Git / GitHub |
@@ -83,38 +84,38 @@ Using Databel's customer dataset (~6,700 records), churn was analyzed across mul
 customer-churn-analysis/
 │
 ├── data/
-│   ├── raw/                  # 1_1_data_preparation.xlsx — original unmodified source
-│   └── processed/            # Customer_Churn_Analysis_.xlsx — cleaned and enriched workbook
+│   ├── raw/                  # 1_1_data_preparation.xlsx (original source file)
+│   └── processed/            # Customer_Churn_Analysis_.xlsx (cleaned and analyzed workbook)
 │
-├── visuals/                  # Exported charts and dashboard 
+├── visuals/                  # Exported charts and dashboard screenshots
 │
 └── README.md                 # You are here
 ```
 
-> ⚠️ *The raw file (`raw_dataset.xlsx`) is kept unmodified as the source of truth. All cleaning, enrichment, and analysis was performed in the separate processed workbook.*
+> The raw file stays untouched as the source of truth. All cleaning and analysis happened in the processed workbook.
 
 ---
 
 ## 5. Data Workflow
 
 ```
-[Databel Aggregate Dataset — Excel]
+[Databel Dataset (Excel)]
             ↓
-[Data Cleaning & Column Enrichment in Excel]
+[Cleaning & Column Enrichment in Excel]
             ↓
-[PivotTable Construction across key dimensions]
+[PivotTables across key dimensions]
             ↓
 [Calculated Metrics (Churn Rate %, grouped fields)]
             ↓
-[Overview Dashboard — summary KPIs + state-level churn table]
+[Overview Dashboard: KPIs + state-level churn table]
 ```
 
-1. **Source:** Pre-aggregated customer data provided as an Excel workbook. Each row represents a unique combination of customer attributes (state, age group, contract type, plan type, etc.) with counts of total and churned customers.
-2. **Ingestion:** Opened directly in Excel; no external connection or import required.
-3. **Cleaning:** Added a `Demographics` grouping column (Under 30 / Senior / Other); added `Grouped Consumption` field bucketing average monthly GB download into `Less than 5 GB`, `Between 5 and 10 GB`, and `10 or more GB`.
-4. **Transformation:** Created PivotTables on the `Customer Pivots` sheet to aggregate churn counts and calculate churn rates across multiple dimensions. Used `GETPIVOTDATA` to pull headline KPIs into the Overview dashboard.
-5. **Analysis:** Compared churn rates by contract type, age group, international plan status, state, data consumption tier, and unlimited plan subscription. Cross-tabulated churn rate against unlimited plan flag and consumption bucket.
-6. **Output:** Summary dashboard (`Overview` sheet) with headline KPIs and a ranked state-level churn table for international plan subscribers. Detailed pivot analysis on `Churn Analysis` and `Customer Pivots` sheets.
+1. **Source:** Pre-aggregated customer data in an Excel workbook. Each row is a unique combination of customer attributes (state, age group, contract type, plan type) with counts of total and churned customers.
+2. **Ingestion:** Opened directly in Excel. No external connection or import was needed.
+3. **Cleaning:** Added a `Demographics` column grouping customers into Under 30, Senior, or Other. Added a `Grouped Consumption` field that buckets average monthly GB download into `Less than 5 GB`, `Between 5 and 10 GB`, and `10 or more GB`.
+4. **Transformation:** Built PivotTables on the `Customer Pivots` sheet to total up churn counts and work out churn rates across each dimension. Used `GETPIVOTDATA` to pull the headline KPIs into the Overview dashboard.
+5. **Analysis:** Compared churn rates by contract type, age group, international plan status, state, data consumption tier, and unlimited plan status. Cross-tabulated churn against the unlimited plan flag and consumption bucket.
+6. **Output:** A summary dashboard on the `Overview` sheet with the headline KPIs and a ranked state-level churn table for international plan subscribers. The detailed pivots live on the `Churn Analysis` and `Customer Pivots` sheets.
 
 ---
 
@@ -126,13 +127,13 @@ customer-churn-analysis/
 |---|---|---|---|
 | `Customer ID` | String | Unique customer identifier | `4444-BZPU` |
 | `Churn Label` | String | Whether the customer churned | `Yes` / `No` |
-| `Account Length (in months)` | Integer | Tenure of the customer | `33` |
+| `Account Length (in months)` | Integer | Customer tenure | `33` |
 | `Contract Type` | String | Subscription contract length | `Month-to-Month` |
 | `Payment Method` | String | How the customer pays | `Direct Debit` |
 | `Monthly Charge` | Float | Monthly bill amount (USD) | `21` |
 | `Total Charges` | Float | Cumulative charges (USD) | `703` |
-| `Intl Plan` | String | Whether customer has international plan | `yes` / `no` |
-| `Intl Active` | String | Whether customer actively used international calls | `Yes` / `No` |
+| `Intl Plan` | String | Whether the customer has an international plan | `yes` / `no` |
+| `Intl Active` | String | Whether the customer actively used international calls | `Yes` / `No` |
 | `Extra International Charges` | Float | Overage charges for international usage (USD) | `6.30` |
 | `Avg Monthly GB Download` | Float | Average monthly data consumption (GB) | `10` |
 | `Unlimited Data Plan` | String | Whether the customer has an unlimited data plan | `Yes` / `No` |
@@ -148,14 +149,14 @@ customer-churn-analysis/
 
 > **Row count (approx.):** ~6,700 customer records
 
-> **Key relationship:** The aggregate sheet groups individual customers by shared attribute combinations; `Total Customers` and `Churned Customers` columns represent counts per group.
+> **Key relationship:** The aggregate sheet groups customers by shared attribute combinations. The `Total Customers` and `Churned Customers` columns hold the counts per group.
 
 ### Enriched Fields (Added During Analysis)
 
 | Field Name | Description |
 |---|---|
-| `Demographics` | Derived grouping: `Under 30`, `Senior`, or `Other` |
-| `Grouped Consumption` | Bucketed data usage: `Less than 5 GB`, `Between 5 and 10 GB`, `10 or more GB` |
+| `Demographics` | Grouping into `Under 30`, `Senior`, or `Other` |
+| `Grouped Consumption` | Data usage bucket: `Less than 5 GB`, `Between 5 and 10 GB`, `10 or more GB` |
 
 ---
 
@@ -163,54 +164,61 @@ customer-churn-analysis/
 
 ### Analytical Approach
 
-This is an exploratory analysis — no hypothesis was tested formally. The goal was to surface patterns in churn rates across multiple customer dimensions and identify where the highest-risk segments concentrate. PivotTables were used to slice churn rate by each dimension independently, and a cross-tabulation was performed to examine the interaction between unlimited plan status and data consumption tier.
+This was an exploratory analysis with no formal hypothesis test. The aim was to find where churn concentrates across customer dimensions. I used PivotTables to slice churn rate by each dimension on its own, then ran a cross-tab to see how unlimited plan status and data consumption interact.
 
 ### Key Metrics Defined
 
 | Metric | Plain-Language Definition | Why It Matters |
 |---|---|---|
-| `Churn Rate %` | Churned Customers ÷ Total Customers | Core KPI — the proportion of customers who left |
-| `Avg Monthly Charges` | Average monthly bill per customer group | Higher charges may correlate with churn risk |
-| `Avg Customer Service Calls` | Average number of support contacts per customer group | Proxy for dissatisfaction or service friction |
-| `Avg Extra International Charges` | Average overage charges for international usage | High unexpected charges are a known churn driver |
+| `Churn Rate %` | Churned Customers ÷ Total Customers | The core KPI: the share of customers who left |
+| `Avg Monthly Charges` | Average monthly bill per customer group | Higher charges may line up with churn risk |
+| `Avg Customer Service Calls` | Average support contacts per customer group | A proxy for frustration or service friction |
+| `Avg Extra International Charges` | Average international overage charges | Surprise charges are a known churn driver |
 
 ### Methods Used
 
 - Descriptive statistics: overall churn rate, average charges, average service call volume
-- Segmentation by: contract type, age group (Under 30 / Senior / Other), state, international plan status, data consumption tier, unlimited plan flag
-- Cross-tabulation: unlimited plan × data consumption bucket × churn rate
+- Segmentation by contract type, age group, state, international plan status, data consumption tier, and unlimited plan flag
+- A cross-tab of unlimited plan status against data consumption bucket and churn rate
 - State-level ranking of churn rates for international plan subscribers
 
 ---
 
 ## 8. Key Insights
 
-**Insight 1: Overall churn rate is 26.9% — well above typical industry benchmarks.**
-Out of 6,687 customers, 1,796 churned. At nearly 1 in 4 customers, this level of attrition represents a significant and urgent business problem.
+**Insight 1: The overall churn rate is 26.9%, well above industry norms.**
+Of 6,687 customers, 1,796 left. Almost 1 in 4 customers churning is a serious problem and the main reason this analysis matters.
 
-**Insight 2: Month-to-month contracts are by far the highest churn risk.**
-Customers on month-to-month contracts churn at ~74%, compared to ~12% on one-year and materially lower rates on two-year contracts. Contract type is the single strongest differentiator in this dataset.
+**Insight 2: Month-to-month contracts churn far more than any other group.**
+Month-to-month customers churn at about 74%, compared with about 12% on one-year contracts and even less on two-year contracts. Contract type is the single strongest signal in the data.
 
-**Insight 3: Senior customers churn at a meaningfully higher rate (~38%) than other age groups.**
-Customers aged 65 and above churn at roughly 14 percentage points above the overall average. This could reflect service complexity, competitor pricing targeting older demographics, or support experience issues.
+**Insight 3: Senior customers churn at about 38%.**
+Customers aged 65 and over churn roughly 14 points above the overall average. This could come down to billing complexity, competitor pricing aimed at older customers, or a support experience that does not work for them.
 
-**Insight 4: International plan subscribers in certain states show extreme churn rates.**
-California leads at 75% churn among international plan users, followed by Indiana (67%) and New Hampshire (63%). Many of these customers appear to have the plan activated but may not be actively using international minutes — suggesting they are paying for a feature they don't need or were mis-sold.
+**Insight 4: International plan subscribers in a few states churn at extreme rates.**
+California tops the list at 75% churn among international plan users, followed by Indiana at 67% and New Hampshire at 63%. A lot of these customers have the plan switched on but show low actual international usage, which suggests they are paying for something they do not use or were signed up for it without needing it.
 
-**Insight 5: Customers without an unlimited data plan who consume 10+ GB per month churn at elevated rates.**
-The cross-tabulation reveals that high-consumption customers without unlimited plans face extra data charges, which likely drives dissatisfaction. Customers on unlimited plans show relatively stable churn regardless of consumption tier.
+**Insight 5: Heavy data users without an unlimited plan churn at higher rates.**
+The cross-tab shows that customers downloading 10 or more GB a month without an unlimited plan rack up extra data charges, and they leave more often. Customers on unlimited plans churn at a steady rate no matter how much data they use.
 
 ---
 
 ## 9. Recommendations
 
-| Priority | Recommendation | Based On | Suggested Owner |
-|---|---|---|---|
-| High | Launch a contract upgrade incentive — offer month-to-month customers a discount to switch to a one-year contract | Insight 2: 74% churn on M2M contracts | Retention / Commercial team |
-| High | Audit international plan subscriptions — proactively reach out to customers with the plan but low international usage | Insight 4: High churn in states with low Intl Active rates | Customer Success / CRM team |
-| Medium | Design a senior-specific retention program — simplify billing, offer dedicated support, or create loyalty pricing | Insight 3: 38% senior churn rate | Marketing / Product team |
-| Medium | Offer unlimited plan upgrades to high-data customers before they incur overage charges | Insight 5: High churn among heavy data users on non-unlimited plans | Billing / Product team |
-| Low | Investigate the specific churn reasons in the top-churning states (CA, IN, NH) for international plan users to determine whether mis-selling is occurring | Insight 4: Extreme state-level churn rates | Compliance / Sales Quality team |
+**1. Get month-to-month customers onto longer contracts.**
+This is where the churn problem really lives, so it is the first place to act. Offer month-to-month customers a discount or a perk to move to a one-year contract. Even a modest shift here would cut the biggest source of churn. Start with the customers who have been on month-to-month the longest, since they are the most likely to walk. *Owner: Retention / Commercial.*
+
+**2. Review who actually needs the international plan.**
+A lot of international plan subscribers in the high-churn states barely make international calls. Pull the list of customers who have the plan but show low usage, and have the team reach out to either right-size their plan or move them to one that fits how they actually use the service. This is a problem the customer feels on every single bill, so fixing it should pay off quickly. *Owner: Customer Success / CRM.*
+
+**3. Build a retention play aimed at customers 65 and over.**
+Senior customers leave at a noticeably higher rate, and a generic offer will not fix that. Test a few things with this group: simpler billing, a dedicated support line, or loyalty pricing. Run it as a small pilot first and measure whether churn in the group drops before rolling it out. *Owner: Marketing / Product.*
+
+**4. Move heavy data users onto unlimited plans before the overage charges hit.**
+Customers downloading 10 or more GB without an unlimited plan are paying surprise overage fees, and they leave more often because of it. Flag these accounts and offer the upgrade before the next bill goes out. For the customer it is a better deal, and for Databel it removes an obvious reason to shop around. *Owner: Billing / Product.*
+
+**5. Find out why California, Indiana, and New Hampshire are so bad.**
+The state-level numbers are extreme enough that something specific is going on, possibly a sales practice that signs people up for plans they do not need. Dig into the churn reasons for international plan users in these three states before spending money on a fix, so the fix actually targets the cause. *Owner: Sales Quality / Compliance.*
 
 ---
 
@@ -218,29 +226,29 @@ The cross-tabulation reveals that high-consumption customers without unlimited p
 
 ### Assumptions
 
-- The `Churned Customers` field accurately reflects customers who have left the service — the data is treated as ground truth without independent verification.
-- The aggregate-level dataset is assumed to faithfully represent the underlying individual customer population.
-- Demographics groupings (Under 30, Senior) use the `Age` field as-is, assuming ages are self-reported and accurate.
-- "Senior" is defined as age 65+ based on the dataset's `Senior` flag.
+- The churn field is treated as correct. I did not independently verify whether each flagged customer actually left.
+- The aggregated dataset is taken as a fair representation of the underlying customer population.
+- Age-based groups use the `Age` field as it stands, assuming the ages are accurate.
+- "Senior" means age 65 and over, based on the dataset's own `Senior` flag.
 
 ### Limitations
 
-- **No time dimension:** The dataset is a static snapshot. Churn trends over time cannot be assessed — it is unknown whether churn is improving, worsening, or seasonal.
-- **Aggregated data:** Rows represent groups of customers sharing the same attribute combination, not individual records. This limits granularity — for example, you cannot analyze the full distribution of charges within a segment.
-- **No customer lifetime value:** Revenue impact of churn cannot be calculated without total charges or tenure-based LTV data.
-- **Causation vs. correlation:** High churn rates in segments (e.g., month-to-month contracts, senior customers) are correlational, not causal. Customers who were already planning to leave may have switched to shorter contracts beforehand — a potential reverse causality issue.
-- **Limited churn reason coverage:** The `Churn Category` and `Churn Reason` fields are only populated for churned customers, and not all churned rows have a recorded reason.
+- **No time dimension.** The data is a single snapshot, so there is no way to tell whether churn is getting better, worse, or moving with the seasons.
+- **Aggregated data.** Rows represent groups of customers who share the same attributes, not individuals. That limits how deep the analysis can go. You cannot see the full spread of charges inside a segment, for example.
+- **No lifetime value.** Without tenure-based LTV data, I could not put a dollar figure on what each churned segment costs the business.
+- **Correlation, not causation.** The high churn rates by segment show association, not cause. Month-to-month customers might already have been on their way out before they picked that contract, which would flip the direction of the relationship.
+- **Patchy churn reasons.** The `Churn Category` and `Churn Reason` fields are only filled in for customers who left, and not even all of those have a reason recorded.
 
 ---
 
 ## 11. Future Enhancements
 
-- [ ] Rebuild analysis on individual-level (non-aggregated) data to enable distribution analysis and regression modeling
-- [ ] Add a time dimension to track monthly churn rates and identify seasonal patterns
-- [ ] Build a logistic regression or decision tree model to predict individual churn probability
-- [ ] Incorporate customer lifetime value (LTV) to prioritize which churned segments cost the business the most
-- [ ] Create an interactive dashboard in Tableau or Power BI for stakeholder-facing reporting
-- [ ] Investigate whether customers who downgraded from long-term to month-to-month contracts before churning represent a leading indicator
+- [ ] Rerun the analysis on individual-level data to allow distribution analysis and modeling
+- [ ] Add a time dimension to track monthly churn and catch seasonal patterns
+- [ ] Build a logistic regression or decision tree to predict churn at the customer level
+- [ ] Bring in customer lifetime value to rank segments by what their churn actually costs
+- [ ] Rebuild the dashboard in Tableau or Power BI for a stakeholder-facing version
+- [ ] Check whether customers who downgrade to month-to-month before leaving act as an early warning sign
 
 ---
 
